@@ -1,0 +1,46 @@
+# Create .gitignore first to avoid committing large data files
+cat > .gitignore << 'EOF'
+# Large data directories
+Thesis_PreDefence/Brain1_JP2/
+Thesis_PreDefence/Brain2_JP2/
+Thesis_PreDefence/JP2 to PNG converter/Output_Data/
+Thesis_PreDefence/JP2 to PNG converter/Output_PNG/
+Thesis_PreDefence/JP2 to PNG converter/venv/
+Thesis_PreDefence/Napari Viewer(Not a must have)/brainview/
+Thesis_PreDefence/cinematic-gaussians/Training_Data*/
+Thesis_PreDefence/cinematic-gaussians/Test_Model*/
+Thesis_PreDefence/cinematic-gaussians/Tank_Test_Model*/
+Thesis_PreDefence/cinematic-gaussians/submodules/
+Thesis_PreDefence/cinematic-gaussians/output/
+
+# Phase 3 data and outputs (gitignored in inner repo)
+Thesis_Defence/r2_gaussian/data/
+Thesis_Defence/r2_gaussian/output/
+Thesis_Defence/r2_gaussian/viewers/
+Thesis_Defence/r2_gaussian/data_generator/synthetic_dataset/Brain2_PNG/
+Thesis_Defence/r2_gaussian/data_generator/synthetic_dataset/Brain2_PNG.npy
+Thesis_Defence/r2_gaussian/data_generator/synthetic_dataset/cone_ntrain_*/
+Thesis_Defence/r2_gaussian/spec.txt
+Thesis_Defence/gaussian-splatting/Data/
+Thesis_Defence/gaussian-splatting/output/
+Thesis_Defence/gaussian-splatting/SIBR_viewers/
+
+# Misc large files
+Misc/*.mkv
+Misc/*.mp4
+Misc/*.jpg
+Misc/*.png
+
+# Python artifacts
+__pycache__/
+*.pyc
+*.pyd
+*.pyo
+*.egg-info/
+build/
+dist/
+
+# Conda / venv
+*.conda
+envs/
+EOF
