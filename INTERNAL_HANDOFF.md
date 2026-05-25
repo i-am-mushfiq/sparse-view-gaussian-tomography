@@ -27,6 +27,7 @@
 13. [Research Continuation Opportunities](#13-research-continuation-opportunities)
 14. [Operational Notes](#14-operational-notes)
 15. [Final Internal Summary](#15-final-internal-summary)
+16. [Archive Integrity — What Was Deleted](#16-archive-integrity--what-was-deleted)
 
 ---
 
@@ -70,8 +71,9 @@ Standard 3DGS renders RGB images via alpha-compositing from perspective cameras.
 ```
 C:\Personal_Endeavours\Thesis\
 │
-├── HANDOFF.md                          ← Top-level archive handoff (portable audit record)
-├── INTERNAL_HANDOFF.md                 ← This document
+├── README.md                           ← Project overview (academic-facing, GitHub landing page)
+├── INTERNAL_HANDOFF.md                 ← This document (comprehensive technical handoff)
+├── .gitmodules                         ← Submodule URL declarations (Thesis_PreDefence + Thesis_Defence → GitHub)
 │
 ├── Misc\                               ← Loose assets
 │   ├── evaluation_metrics.csv          ← Training metrics log (PSNR/SSIM over iterations)
@@ -104,9 +106,10 @@ C:\Personal_Endeavours\Thesis\
 │       └── Training_Data_v*/           ← COLMAP-prepared training runs [gitignored]
 │
 └── Thesis_Defence\                     ← Phase 3: R²-Gaussian CT reconstruction [MAIN]
+    ├── .git\                           ← Wrapper repo (latest: 0724e2c; pins r2_gaussian→bc76c2d)
     ├── .gitignore                      ← Excludes data/, output/, Brain2_PNG/, etc.
-    ├── gaussian-splatting\             ← Upstream 3DGS baseline (reference only)
-    ├── simple-knn\                     ← Top-level standalone simple-knn (reference copy)
+    ├── gaussian-splatting\             ← Upstream 3DGS baseline (gitlink: 54c035f)
+    ├── simple-knn\                     ← Top-level standalone simple-knn (gitlink: 86710c2)
     └── r2_gaussian\                    ← MAIN CODEBASE ← start here
         ├── train.py                    ← PRIMARY ENTRY POINT
         ├── test.py                     ← Evaluation
@@ -156,6 +159,17 @@ PHASE 3 WORKFLOW ORDER:
     → 3D_vis/ scripts (visualization)
 ```
 
+### Remote Repositories (GitHub)
+
+All four repositories are public on GitHub. The root repo uses `.gitmodules` so Thesis_Defence and Thesis_PreDefence render as navigable submodule links on GitHub.
+
+| Repository | GitHub URL | Notes |
+|------------|------------|-------|
+| Root (landing repo) | https://github.com/i-am-mushfiq/sparse-view-gaussian-tomography | README, INTERNAL_HANDOFF.md, Misc, .gitmodules |
+| Thesis_Defence | https://github.com/i-am-mushfiq/gaussian-tomography | Phase 3 wrapper; submodule of root |
+| Thesis_PreDefence | https://github.com/i-am-mushfiq/3dgs-brain-ct-visualisation | Phase 1+2 wrapper; submodule of root |
+| r2_gaussian | https://github.com/i-am-mushfiq/r2_gaussian | Main research codebase (fork of Ruyi-Zha/r2_gaussian) |
+
 ---
 
 ## 3. Research Progression — Three Phases
@@ -177,7 +191,9 @@ PHASE 3 WORKFLOW ORDER:
 **What it demonstrated:** Orthographic rendering from a PNG-slice-derived Gaussian model is feasible. However, the COLMAP camera calibration approach (treating CT slices as photographs) is a geometrically wrong approximation.
 
 ### Phase 3 — CT-Native Reconstruction (MAIN)
-**Folder:** `Thesis_Defence/r2_gaussian/` (git commit `bc76c2d`)  
+**Folder:** `Thesis_Defence/r2_gaussian/`  
+**GitHub:** https://github.com/i-am-mushfiq/r2_gaussian (fork of Ruyi-Zha/r2_gaussian)  
+**Commits:** `b9cd35e` — Phase 3 thesis work (all custom scripts, 3D_vis suite, myenv.yml); `cc84eda` — Fix PLYcomparer.py (replace hardcoded absolute path with relative)  
 **What happened:** Switched entirely to R²-Gaussian (Ruyi-Zha/r2_gaussian), which natively handles CT geometry via TIGRE. No COLMAP. Cameras come from scanner physics. This is the architecturally correct approach.
 - Integrated custom brain dataset (LADAF Brain2, 202µm resolution) into the R²-Gaussian pipeline
 - Built `png_stack_to_npy.py` (custom preprocessing script not in original R²-Gaussian)
@@ -1102,3 +1118,36 @@ python r2_gaussian/initialize_pcd.py --data <data_path> --evaluate
 - Densification with correct hyperparameters
 
 The core research question — whether Gaussian splatting outperforms classical CT reconstruction on brain data at 75 views — has not been definitively answered. The current 3D PSNR of 6.22 dB likely reflects an experimental configuration problem (scanner parameters, disabled densification) rather than a fundamental limitation of the method. The next team's priority should be resolving the scanner calibration and running traditional baselines before drawing any conclusions.
+
+---
+
+## 16. Archive Integrity — What Was Deleted
+
+### `Thesis/` Folder (Original Working Directory)
+
+The original starting-point folder (`Thesis/`) was deleted from disk after a rigorous file audit confirmed it contained no unique content. This section documents that audit for posterity.
+
+**Audit procedure:**
+- All 1806 JP2 files in `Thesis/cinematic-gaussians/Training_Data/` were verified identical to `Thesis_PreDefence/Brain1_JP2/` via MD5 spot-checks (5/5 checked, all matched).
+- All 115 non-pycache source files in `Thesis/cinematic-gaussians/` were confirmed to exist in `Thesis_PreDefence/cinematic-gaussians/`. The only absent items were `__pycache__/*.pyc` bytecode files — irreversible derivatives with no research value.
+- `Thesis/cinematic-gaussians/Output_Model/` was empty (0 files).
+- The git history of `Thesis/cinematic-gaussians/` at the pre-modification state is captured as commit `5392c34`, pinned by the wrapper repo's Phase 1 commit `8c9b1a5` in `Thesis_PreDefence/`.
+- **One unique file existed:** an early brain render PNG (UUID filename, ~1.1 MB). A copy was preserved at `Thesis_PreDefence/1e523224-d008-4a29-b283-2d0ad1354feb - Copy.png` before deletion.
+
+**Conclusion:** The `Thesis/` folder was a strict subset of `Thesis_PreDefence/` with no unique tracked content beyond the preserved PNG. Deletion was safe.
+
+### Git Commit Audit (Phase 1+2 Gitlink Hashes)
+
+For complete traceability, the full git commit lineage for the pre-defence phase:
+
+| Repo | Commit | Description |
+|------|--------|-------------|
+| `Thesis_PreDefence/` wrapper | `8c9b1a5` | Phase 1 — initial exploration (gitlink → `5392c34`) |
+| `Thesis_PreDefence/` wrapper | `b5a0cbc` | Phase 2 — pipeline and fixes (gitlink → `c7baa94`) |
+| `cinematic-gaussians/` | `5392c34` | Last upstream commit before thesis modifications |
+| `cinematic-gaussians/` | `c7baa94` | Thesis changes: dataset_readers fix, Windows multiprocessing fix, export_ply, make_cameras, UTF-8 env |
+| `Thesis_Defence/` wrapper | `27fbef3` | Phase 3 initial (gitlinks: r2_gaussian→`bc76c2d`, gaussian-splatting→`54c035f`, simple-knn→`86710c2`) |
+| `Thesis_Defence/` wrapper | `0724e2c` | Latest (Fix README title) |
+| `r2_gaussian/` | `fc2bcad` | Last upstream commit (Ruyi-Zha/r2_gaussian) before thesis work |
+| `r2_gaussian/` | `b9cd35e` | Phase 3 thesis work — all custom scripts, 3D_vis suite, myenv.yml |
+| `r2_gaussian/` | `cc84eda` | Fix PLYcomparer.py — replace hardcoded absolute path |

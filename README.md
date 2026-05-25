@@ -357,11 +357,22 @@ If differentiable Gaussian splatting can produce diagnostically acceptable recon
 
 ## Repository Structure
 
+### GitHub Repositories
+
+| Repository | URL |
+|------------|-----|
+| This repo (root) | https://github.com/i-am-mushfiq/sparse-view-gaussian-tomography |
+| Thesis_Defence | https://github.com/i-am-mushfiq/gaussian-tomography |
+| Thesis_PreDefence | https://github.com/i-am-mushfiq/3dgs-brain-ct-visualisation |
+| r2_gaussian (main codebase) | https://github.com/i-am-mushfiq/r2_gaussian |
+
+### Directory Layout
+
 ```
 Thesis/
-├── HANDOFF.md                          # Archive-level audit and research progression
-├── INTERNAL_HANDOFF.md                 # Full technical handoff for incoming team
 ├── README.md                           # This document
+├── INTERNAL_HANDOFF.md                 # Full technical handoff for incoming team
+├── .gitmodules                         # Submodule declarations (Thesis_Defence + Thesis_PreDefence)
 │
 ├── Misc/
 │   ├── evaluation_metrics.csv          # Training curve: PSNR/SSIM over 30k iterations
