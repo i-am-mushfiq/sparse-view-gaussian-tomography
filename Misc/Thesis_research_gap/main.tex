@@ -1,0 +1,166 @@
+\documentclass{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+
+% Set Beamer Theme
+\usetheme{Madrid} % You can change this to another theme
+
+% Title Information
+\title[Physics-Constrained Gaussian Splatting]{Research Gaps in Physics-Constrained Gaussian Splatting for Medical Imaging}
+\subtitle{Integrating Physical Constraints into 3D Representations}
+\author{Your Name}
+\institute{Your Institution}
+\date{\today}
+
+\begin{document}
+
+% Slide 1: Title Slide
+\begin{frame}
+    \titlepage
+\end{frame}
+
+% Slide 2: Agenda
+\begin{frame}{Agenda}
+    \tableofcontents
+\end{frame}
+
+% Slide 3: Background on Gaussian Splatting
+\section{Background on Gaussian Splatting}
+\begin{frame}{Background on Gaussian Splatting}
+    \begin{itemize}
+        \item \textbf{Definition:} Explicit 3D representation using a cloud of Gaussians.
+        \item \textbf{Advantages:}
+        \begin{itemize}
+            \item Real-time rendering.
+            \item High efficiency compared to NeRF-based methods.
+        \end{itemize}
+        \item \textbf{Current Applications:}
+        \begin{itemize}
+            \item RGB novel view synthesis.
+            \item Emerging use in X-ray and CT reconstruction.
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+% Slide 4: Current State-of-the-Art in Medical Imaging
+\section{Current State-of-the-Art in Medical Imaging}
+\begin{frame}{Current State-of-the-Art in Medical Imaging}
+    \begin{itemize}
+        \item \textbf{Neural Radiance Fields (NeRF):}
+        \begin{itemize}
+            \item Implicit representation.
+            \item High-quality reconstructions.
+            \item Limitations: long training/inference times, heavy computation.
+        \end{itemize}
+        \item \textbf{Gaussian Splatting (3DGS):}
+        \begin{itemize}
+            \item Fast and efficient in the RGB domain.
+            \item Initial adaptations for X-ray (e.g., X-Gaussian).
+        \end{itemize}
+        \item \textbf{Key Limitation:} Lack of explicit integration of physical imaging models.
+    \end{itemize}
+\end{frame}
+
+% Slide 5: Identification of the Research Gap
+\section{Identification of the Research Gap}
+\begin{frame}{Identification of the Research Gap}
+    \begin{itemize}
+        \item \textbf{The Gap:} Current Gaussian splatting models do not incorporate known physical constraints.
+        \item \textbf{Why It Matters:}
+        \begin{itemize}
+            \item In X-ray imaging: disregard of the Beer–Lambert law.
+            \item In MRI: neglect of complex-valued signal formation (T1/T2 relaxations, echo time).
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+% Slide 6: Understanding Physical Constraints
+\section{Understanding Physical Constraints}
+\begin{frame}{Understanding Physical Constraints}
+    \begin{itemize}
+        \item \textbf{X-ray Attenuation:}
+        \[
+        I = I_0 \exp\left(-\int_{\text{ray}} \mu(x) \,dx\right)
+        \]
+        \item \textbf{MRI Signal Model:}
+        \begin{itemize}
+            \item Signal equations depend on proton density and relaxation times (T1, T2).
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+% Slide 7: Exploration Direction 1 – Embedding X-ray Attenuation Laws
+\section{Exploration Direction 1}
+\begin{frame}{Embedding X-ray Attenuation Laws}
+    \begin{itemize}
+        \item \textbf{Redesigning the Gaussian Kernel:}
+        \begin{itemize}
+            \item Associate each Gaussian with an attenuation (density) parameter.
+        \end{itemize}
+        \item \textbf{Physics-Based Loss Function:}
+        \[
+        \mathcal{L}_{\text{physics}} = \| I_{\text{measured}} - I_0 \exp(-\sum_{i} \mu_i \, w_i) \|_1
+        \]
+    \end{itemize}
+\end{frame}
+
+% Slide 8: Exploration Direction 2 – Incorporating MRI Signal Models
+\section{Exploration Direction 2}
+\begin{frame}{Incorporating MRI Signal Models}
+    \begin{itemize}
+        \item \textbf{Adapting Gaussian Splatting for MRI:}
+        \begin{itemize}
+            \item Extend representation to handle complex signals.
+        \end{itemize}
+        \item \textbf{Differentiable MRI Forward Model:}
+        \begin{itemize}
+            \item Simulate MRI acquisition (Fourier sampling, signal decay).
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+% Slide 9: Benefits of a Unified, Physics-Constrained Framework
+\section{Benefits of a Unified Framework}
+\begin{frame}{Benefits of a Unified, Physics-Constrained Framework}
+    \begin{itemize}
+        \item \textbf{Accuracy & Robustness:} Reduces artifacts and noise.
+        \item \textbf{Interpretability:} Parameters correspond to actual physical quantities.
+        \item \textbf{Clinical Impact:} Potential for lower radiation dose and better diagnostic quality.
+    \end{itemize}
+\end{frame}
+
+% Slide 10: Roadmap for Implementation
+\section{Roadmap for Implementation}
+\begin{frame}{Roadmap for Implementation}
+    \begin{itemize}
+        \item \textbf{Step 1: Theoretical Derivation}
+        \item \textbf{Step 2: Kernel Redesign}
+        \item \textbf{Step 3: Loss Function Engineering}
+        \item \textbf{Step 4: Initialization & Regularization}
+        \item \textbf{Step 5: Validation & Testing}
+        \item \textbf{Step 6: Optimization & Scalability}
+    \end{itemize}
+\end{frame}
+
+% Slide 11: Challenges and Future Directions
+\section{Challenges and Future Directions}
+\begin{frame}{Challenges and Future Directions}
+    \begin{itemize}
+        \item \textbf{Computational Complexity:} Balancing real-time performance.
+        \item \textbf{Validation:} Need for extensive clinical testing.
+        \item \textbf{Extension to Multimodal Data:} Integrating PET/MRI.
+    \end{itemize}
+\end{frame}
+
+% Slide 12: Summary and Conclusion
+\section{Summary and Conclusion}
+\begin{frame}{Summary and Conclusion}
+    \begin{itemize}
+        \item \textbf{Recap:} Gaussian splatting lacks physics-based constraints.
+        \item \textbf{Proposed Exploration:} Embedding X-ray and MRI models.
+        \item \textbf{Future Impact:} Improved reconstruction quality, clinical trust.
+    \end{itemize}
+\end{frame}
+
+\end{document}

@@ -1,0 +1,7 @@
+[submodule "Thesis_Defence"]
+	path = Thesis_Defence
+	url = https://github.com/i-am-mushfiq/gaussian-tomography.git
+
+[submodule "Thesis_PreDefence"]
+	path = Thesis_PreDefence
+	url = https://github.com/i-am-mushfiq/3dgs-brain-ct-visualisation.git

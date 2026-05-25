@@ -1,6 +1,4 @@
-# Create .gitignore first to avoid committing large data files
-cat > .gitignore << 'EOF'
-# Large data directories
+# ── Large data directories (Phase 1 + 2) ──────────────────────────────────────
 Thesis_PreDefence/Brain1_JP2/
 Thesis_PreDefence/Brain2_JP2/
 Thesis_PreDefence/JP2 to PNG converter/Output_Data/
@@ -13,7 +11,7 @@ Thesis_PreDefence/cinematic-gaussians/Tank_Test_Model*/
 Thesis_PreDefence/cinematic-gaussians/submodules/
 Thesis_PreDefence/cinematic-gaussians/output/
 
-# Phase 3 data and outputs (gitignored in inner repo)
+# ── Large data and outputs (Phase 3) ──────────────────────────────────────────
 Thesis_Defence/r2_gaussian/data/
 Thesis_Defence/r2_gaussian/output/
 Thesis_Defence/r2_gaussian/viewers/
@@ -25,13 +23,16 @@ Thesis_Defence/gaussian-splatting/Data/
 Thesis_Defence/gaussian-splatting/output/
 Thesis_Defence/gaussian-splatting/SIBR_viewers/
 
-# Misc large files
+# ── Misc large / irrelevant files ─────────────────────────────────────────────
 Misc/*.mkv
 Misc/*.mp4
 Misc/*.jpg
 Misc/*.png
+Misc/CleanEasy_BeamerTheme-2.pdf
+Misc/Gaussian Splatting for Cinematic Anatomy.pdf
+Misc/Multi-Layer Gaussian Splatting for Immersive Anatomy Visualization.pdf
 
-# Python artifacts
+# ── Python artifacts ──────────────────────────────────────────────────────────
 __pycache__/
 *.pyc
 *.pyd
@@ -40,7 +41,6 @@ __pycache__/
 build/
 dist/
 
-# Conda / venv
+# ── Conda / venv ──────────────────────────────────────────────────────────────
 *.conda
 envs/
-EOF
