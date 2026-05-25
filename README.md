@@ -1,4 +1,4 @@
-# Orthographic Gaussian Splatting for Volumetric Anatomical Visualization
+# [Thesis] Orthographic Gaussian Splatting for Volumetric Anatomical Visualization
 ### Adapting Differentiable Radiative Rendering to Sparse-View CT Reconstruction
 
 ---
